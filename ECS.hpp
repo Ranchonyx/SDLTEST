@@ -1,4 +1,5 @@
 #pragma once
+#include "SDL.h"
 #include <iostream>
 #include <vector>
 #include <memory>
@@ -22,7 +23,7 @@ inline ComponentID getComponentTypeID() {
 
 template <typename T> inline ComponentID getComponentTypeID() noexcept {
 	static ComponentID typeID = getComponentTypeID();
-	return typeID();
+	return typeID;
 }
 
 class Component {
@@ -33,6 +34,8 @@ public:
 	virtual void update() {};
 	virtual void draw() {};
 
+	virtual void logSelf() {};
+
 	virtual ~Component() {};
 };
 
@@ -42,15 +45,20 @@ private:
 	std::vector<std::unique_ptr<Component>> components;
 
 	ComponentArray componentArray;
-	ComponentBitSet componentBitset;
+	ComponentBitSet componentBitSet;
 
 public:
 	void update() {
-		for (auto& component : components) component->update();
-		for (auto& component : components) component->draw();
+		for (auto& component : components) {
+			component->update();
+			component->logSelf();
+		} 
+
 	}
 
-	void draw() {}
+	void draw() {
+		for (auto& component : components) component->draw();
+	}
 
 	void destroy() {
 		active = false;
@@ -61,9 +69,11 @@ public:
 	}
 
 	template <typename T> bool hasComponent() const {
-		return componentBitSet[getComponentTypeID<T>];
+		return componentBitSet[getComponentTypeID<T>()];
 	}
-
+	
+	//Add component to entity
+	//I am in massive pain oh god it hurts
 	template<typename T, typename... TArgs>
 	T& addComponent(TArgs&&... mArgs) {
 		T* c(new T(std::forward<TArgs>(mArgs)...));
@@ -104,5 +114,12 @@ public:
 				return !mEntity->isActive();
 			}),
 			std::end(entities));
+	}
+
+	Entity& addEntity() {
+		Entity* e = new Entity();
+		std::unique_ptr<Entity> uPtr{ e };
+		entities.emplace_back(std::move(uPtr));
+		return *e;
 	}
 };

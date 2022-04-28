@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Headerdateien\ECS">
+      <UniqueIdentifier>{2a32aa09-615f-43c7-a154-444aa1ea7d70}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -27,40 +30,52 @@
     <ClCompile Include="TextMan.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="Vector2D.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="ECS.cpp">
-      <Filter>Quelldateien</Filter>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Headerdateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.hpp">
-      <Filter>Quelldateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.hpp">
-      <Filter>Quelldateien</Filter>
-    </ClInclude>
-    <ClInclude Include="TextMan.hpp">
-      <Filter>Quelldateien</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.hpp">
-      <Filter>Quelldateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector2D.hpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Map.hpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="TextMan.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2D.hpp">
+      <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="ECS.hpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Headerdateien\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Components.hpp">
+      <Filter>Headerdateien\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteComponent.hpp">
+      <Filter>Headerdateien\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformComponent.hpp">
+      <Filter>Headerdateien\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardController.hpp">
+      <Filter>Headerdateien\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliderComponent.hpp">
+      <Filter>Headerdateien\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.hpp">
+      <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,6 +2,8 @@
 #include "TextMan.hpp"
 #include <fstream>
 //#include "Serializer.hpp"
+bool drewn = false;
+bool needsUpdate = false;
 
 #pragma region fallbackMapBuffer
 
@@ -42,26 +44,45 @@ Map::Map() {
 	//LoadMap(lvl1);
 
 	LoadMapFromFile("assets/maps/level1.mmap");
+	SDL_Log("Loaded map from maps folder");
 
 	src.x = src.y = 0;
 	src.w = dest.w = 32;
 	src.h = dest.h = 32;
 
 	dest.x = dest.y = 0;
-	Vector2D* tpos = new Vector2D(10, 10);
-	DrawTile(tpos, 2);
 };
 
+Map::~Map() {
+	SDL_DestroyTexture(dirt);
+	SDL_DestroyTexture(grass);
+	SDL_DestroyTexture(water);
+	SDL_DestroyTexture(gravel);
+	SDL_DestroyTexture(path);
+	SDL_DestroyTexture(lava);
+	SDL_DestroyTexture(placeholder);
+
+}
+
 void Map::LoadMapFromFile(const char* path) {
+
+	//Datenstrom zum lesen der Datei öffnen
 	std::ifstream mapstream(path, std::ifstream::in);
+
+	//Falls der Datenstrom nicht erfolgreich geöffnet wurde,
+	//den fallbackBuffer, also eine Fallback-Map laden
 	if (!mapstream.is_open()) {
-		//Fallback, map doesnt exist
+
+		//Fallback, Karte existiert nicht!
+		SDL_Log("Map \" %s \" doesn't exist! Falling back to default map.", path);
 		LoadMap(fallbackMapBuffer);
-		printf("Map \" %s \" doesn't exist! Falling back to default map.", path);
 	}
 	else {
-		//Map does exist
-		printf("Map \" %s \" exists! Continuing with loading process.", path);
+
+		//Karte existiert
+		SDL_Log("Map \" %s \" exists! Continuing with loading process.", path);
+
+		//Über alle Zellen in der Datei laufen und in die variable Map einlesen
 		for (int row = 0; row < 20; row++) {
 			for (int col = 0; col < 25; col++) {
 				mapstream >> map[row][col];
@@ -79,38 +100,53 @@ void Map::LoadMap(int arr[20][25]) {
 }
 
 void Map::DrawMap() {
+	//Lokale Variable zum speichern der Zahl,
+	//Je nach welcher der Boden gezeichnet werden soll
 	int type = 0;
 
+	//Über alle einzelnen Zellen (Zahlen) in der Datei laufen
 	for (int row = 0; row < 20; row++) {
 		for (int col = 0; col < 25; col++) {
+
+			//Setze den typ auf die momentane Zelle
 			type = map[row][col];
+
 
 			dest.x = col * 32;
 			dest.y = row * 32;
 
+			//Je nach momentanem Typ die korrespondierende Textur zeichnen
 			switch (type) {
 			case 0:
+				//Falls der Typ 0 ist, Erde zeichnen
 				TextMan::Draw(dirt, src, dest);
 				break;
 			case 1:
+				//Falls der Typ 1 ist, Gras zeichnen
 				TextMan::Draw(grass, src, dest);
 				break;
 			case 2:
+				//Falls der Typ 2 ist, Wasser zeichnen
 				TextMan::Draw(water, src, dest);
 				break;
 			case 3:
+				//Falls der Typ 3 ist, Kies zeichnen
 				TextMan::Draw(gravel, src, dest);
 				break;
 			case 4:
+				//Falls der Typ 4 ist, Pfad zeichnen
 				TextMan::Draw(path, src, dest);
 				break;
 			case 5:
+				//Falls der Typ 6 ist, Lava zeichnen
 				TextMan::Draw(lava, src, dest);
 				break;
 			case 6:
+				//Falls der Typ 6 ist, Platzhalter zeichnen
 				TextMan::Draw(placeholder, src, dest);
 				break;
 			default:
+				//Falls der Typ mit keinem der obigen übereinstimmt, den Platzhalter zeichnen
 				TextMan::Draw(placeholder, src, dest);
 				break;
 			}
@@ -119,52 +155,8 @@ void Map::DrawMap() {
 }
 
 void Map::DrawTile(Vector2D* position, int tileID) {
-	for (int row = 0; row < 20; row++) {
-		dest.y = row * 32;
-		printf("\nDest Y = %i", dest.y);
-		printf("\nPos Y = %i", position->getY() * 32);
+	int x = position->x;
+	int y = position->y;
 
-		if (dest.x == position->getX() * 32) {
-			printf("\n x correct");
-		}
-
-		for (int col = 0; col < 25; col++) {
-			dest.x = col * 32;
-		}
-	}
-
-	for (int row = 0; row < 20; row++) {
-		for (int col = 0; col < 25; col++) {
-			dest.x = col * 32;
-			dest.y = row * 32;
-
-			switch (tileID) {
-				printf("\nDrawing %i at DestRect(%i, %i)", tileID, position->getX() * 32, position->getY() * 32);
-			case 0:
-				TextMan::Draw(dirt, src, dest);
-				break;
-			case 1:
-				TextMan::Draw(grass, src, dest);
-				break;
-			case 2:
-				TextMan::Draw(water, src, dest);
-				break;
-			case 3:
-				TextMan::Draw(gravel, src, dest);
-				break;
-			case 4:
-				TextMan::Draw(path, src, dest);
-				break;
-			case 5:
-				TextMan::Draw(lava, src, dest);
-				break;
-			case 6:
-				TextMan::Draw(placeholder, src, dest);
-				break;
-			default:
-				TextMan::Draw(placeholder, src, dest);
-				break;
-			}
-		}
-	}
+	map[x][y] = tileID;
 }

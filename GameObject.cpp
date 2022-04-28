@@ -14,8 +14,8 @@ void GameObject::Update() {
 	srcRect.x = 0;
 	srcRect.y = 0;
 
-	destRect.x = location->getX();
-	destRect.y = location->getY();
+	destRect.x = location->x;
+	destRect.y = location->y;
 	destRect.w = srcRect.w * scaleFactor;
 	destRect.h = srcRect.h * scaleFactor;
 }

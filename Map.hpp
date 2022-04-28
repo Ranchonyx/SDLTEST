@@ -11,9 +11,10 @@ public:
 	void LoadMap(int arr[20][25]);
 	void LoadMapFromFile(const char* path);
 	void DrawMap();
-	void DrawTile(Vector2D* position, int tileID = 0);
+	void DrawTile(Vector2D* position, int tileID);
 
 private:
+	int map[20][25];
 	SDL_Rect src, dest;
 
 	SDL_Texture* dirt;
@@ -23,6 +24,4 @@ private:
 	SDL_Texture* path;
 	SDL_Texture* lava;
 	SDL_Texture* placeholder;
-
-	int map[20][25];
 };

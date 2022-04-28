@@ -1,14 +1,19 @@
 #ifndef Game_hpp
 #define Game_hpp
 
-#include "SDL.h"
-#include "SDL_opengl.h"
-#include "Timer.hpp"
+#define AutoString(s) std::string s = #s
+
 #include <stdio.h>
 #include <iostream>
+#include "SDL.h"
+#include "Timer.hpp"
 
 class Game {
 public:
+
+	static SDL_Renderer* renderer;
+	static SDL_Event event;
+
 	Game();
 	~Game();
 
@@ -19,16 +24,17 @@ public:
 	void render();
 	void clean();
 
-	static SDL_Renderer* renderer;
-
 	void setFrameStart();
 	void runFrameDelay();
 	void computeFrameTime();
 	int computeFps();
 
-	bool running() { printf("Called running"); return isRunning; }
+	bool running() {
+		return isRunning;
+	}
 
 private:
+
 	const int __GLOBAL__FPS__ = 60;
 	const int __GLOBAL__FRAME__DELAY__ = (1000 / __GLOBAL__FPS__);
 	int count = 0;

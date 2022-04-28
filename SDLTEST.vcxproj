@@ -86,15 +86,17 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;GLEW_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>F:\Facharbeit\Code\SDL2-2.0.12\include;F:\Facharbeit\Code\SDL2_image\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\Facharbeit\Code\SDL2-2.0.12\include;F:\Facharbeit\Code\SDL2_image\include;F:\Facharbeit\Code\glew-2.1.0\include\GL;F:\Facharbeit\Code\freeglut\include\GL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>F:\Facharbeit\Code\SDL2-2.0.12\lib\x86;F:\Facharbeit\Code\SDL2_image\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>F:\Facharbeit\Code\SDL2-2.0.12\lib\x86;F:\Facharbeit\Code\SDL2_image\lib\x86;F:\Facharbeit\Code\glew-2.1.0\lib\Release\Win32;F:\Facharbeit\Code\freeglut\lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;opengl32.lib;glew32s.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/NODEFAULTLIB:LIBCMT %(AdditionalOptions)</AdditionalOptions>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -142,9 +144,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ECS.cpp" />
+    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="TextMan.cpp" />
@@ -152,10 +153,15 @@
     <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ColliderComponent.hpp" />
+    <ClInclude Include="Collision.hpp" />
+    <ClInclude Include="Components.hpp" />
     <ClInclude Include="ECS.hpp" />
     <ClInclude Include="Game.hpp" />
-    <ClInclude Include="GameObject.hpp" />
+    <ClInclude Include="KeyboardController.hpp" />
     <ClInclude Include="Map.hpp" />
+    <ClInclude Include="TransformComponent.hpp" />
+    <ClInclude Include="SpriteComponent.hpp" />
     <ClInclude Include="TextMan.hpp" />
     <ClInclude Include="Timer.hpp" />
     <ClInclude Include="Vector2D.hpp" />
